@@ -15,10 +15,11 @@ if version_info[0] >= 3:
 ENCODING = stdin.encoding if system() == "Windows" else "utf-8"
 
 def trimmer(text):
-    '''Remove all extra informations like {bla} and [blub]'''
+    '''Remove all extra informations'''
     return text.rsplit("{")[0].rsplit("[")[0].rsplit("(")[0].strip()
 
 def read_dictionary(file_name):
+    '''Read out the dictionary file and save into RAM'''
     dict = {}
     with open(file_name) if version_info[0] < 3 else open(file_name, encoding="utf-8") as dictionary_file:
         for line in dictionary_file.readlines():
@@ -63,7 +64,7 @@ def gui(dict, time_in_sec):
         (len(dict), time_in_sec))
     print("for abort press [ctrl]+[c]")
     while True:
-        search_word_lower = make_unicode_python2(raw_input(": ").lower())
+        search_word_lower = make_unicode_python2(raw_input(": ").strip().lower())
         try:
             for item in dict[search_word_lower.__hash__()]:
                 if item[0].lower() == search_word_lower:
